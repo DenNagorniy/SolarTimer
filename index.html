@@ -2,14 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>SolarTimer — Ваш идеальный световой день</title>
+    <title>SolarTimer — Магические планетарные часы</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
             --day-bg: linear-gradient(135deg, #fdf6e3 0%, #ffe29f 60%, #feb47b 100%);
-            --night-bg: linear-gradient(135deg, #26355d 0%, #162542 60%, #333c61 100%);
             --day-accent: #f7b01a;
-            --night-accent: #5fa8eb;
         }
         body {
             min-height: 100vh;
@@ -20,10 +18,6 @@
             font-family: 'Segoe UI', Arial, sans-serif;
             transition: background 0.7s;
         }
-        body.night {
-            background: var(--night-bg);
-            color: #f7f7fa;
-        }
         /* --- Облака --- */
         #clouds {
             position: fixed;
@@ -33,9 +27,7 @@
             opacity: 0.68;
             transition: opacity .8s;
             filter: blur(0.3px);
-            display: none;
         }
-        body.day #clouds { display: block; }
         .cloud {
             position: absolute;
             fill: #fff9e7;
@@ -52,30 +44,10 @@
             0% { transform: translateX(0);}
             100% { transform: translateX(45vw);}
         }
-        /* --- Звезды --- */
-        #stars {
-            position: fixed;
-            left: 0; top: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-            display: none;
-        }
-        body.night #stars { display: block; }
-        .star {
-            position: absolute;
-            background: #fffbe6;
-            border-radius: 50%;
-            opacity: .81;
-            animation: starTwinkle 3s infinite;
-        }
-        @keyframes starTwinkle {
-            0%,100% { opacity: 0.65;}
-            50% { opacity: 1;}
-        }
         /* --- Контейнер и карточки --- */
         .container {
             position: relative;
-            max-width: 430px;
+            max-width: 450px;
             margin: 46px auto 0 auto;
             background: rgba(255,255,255,0.95);
             border-radius: 32px;
@@ -84,10 +56,6 @@
             text-align: center;
             animation: fadein 1s;
             z-index: 1;
-        }
-        body.night .container {
-            background: rgba(38,45,76, 0.93);
-            box-shadow: 0 4px 32px 0 #0006, 0 1.5px 6px #fff2;
         }
         @keyframes fadein {
             from { opacity: 0; transform: translateY(30px);}
@@ -101,7 +69,7 @@
             margin-bottom: 6px;
         }
         .header {
-            font-size: 2.3em;
+            font-size: 2.1em;
             font-weight: 900;
             letter-spacing: 1px;
             margin-bottom: 0;
@@ -114,7 +82,6 @@
             animation: fadeinTitle 1.1s .05s both;
             user-select: none;
         }
-        body.night .header { color: var(--night-accent);}
         @keyframes fadeinTitle {
             from { opacity: 0; transform: scale(.85) translateY(-20px);}
             to { opacity: 1; transform: none;}
@@ -125,74 +92,11 @@
             position: relative;
             cursor: pointer;
             animation: spin 8s linear infinite;
-            transition: filter .3s;
-        }
-        .header .icon-astro.sun {
-            text-shadow: 0 0 24px #ffd16a66, 0 0 12px #f7ce3266;
-        }
-        .header .icon-astro.night {
-            animation: swing 5s ease-in-out infinite;
-            text-shadow: 0 0 36px #ffc  , 0 0 30px #f7d77455, 0 0 4px #fff3;
-            filter: drop-shadow(0 0 12px #fff1);
-        }
-        .header .icon-astro.manual { filter: brightness(1.3) contrast(1.7) drop-shadow(0 0 8px #58f2fa99);}
-        .header .icon-astro .astro-glow { pointer-events: none;}
-        .astro-glow {
-            position: absolute;
-            left: 50%; top: 50%;
-            transform: translate(-50%,-50%);
-            z-index: 0;
-            border-radius: 50%;
-            opacity: .77;
-        }
-        .astro-glow.sun {
-            width: 44px; height: 44px;
-            background: radial-gradient(circle, #ffe29f 25%, #ffd16a77 50%, #f7ce3233 90%, transparent 100%);
-            filter: blur(2px);
-            animation: sunGlow 2.4s linear infinite alternate;
-        }
-        .astro-glow.moon {
-            width: 40px; height: 40px;
-            background: radial-gradient(circle, #f6f9e8 40%, #fff 90%, transparent 100%);
-            filter: blur(4px);
-            animation: moonGlow 2.2s linear infinite alternate;
-            opacity: .46;
-        }
-        @keyframes sunGlow {
-            0% { opacity: 0.67;}
-            100% { opacity: 1;}
-        }
-        @keyframes moonGlow {
-            0% { opacity: 0.28;}
-            100% { opacity: 0.54;}
         }
         @keyframes spin {
             0% { transform: rotate(0deg);}
             100% { transform: rotate(360deg);}
         }
-        @keyframes swing {
-            0%, 100% { transform: rotate(-7deg);}
-            50% { transform: rotate(10deg);}
-        }
-        .astro-override {
-            margin-left: 12px;
-            font-size: 1.28em;
-            color: #e08a00;
-            background: #fff6c055;
-            border-radius: 50%;
-            cursor: pointer;
-            padding: 0 11px 2px 11px;
-            border: 1px solid #f7ce32;
-            opacity: .87;
-            transition: opacity .17s, background .24s;
-            z-index:2;
-            user-select:none;
-            box-shadow: 0 2px 4px #fff8;
-            height: 1.6em;
-            display: flex;
-            align-items: center;
-        }
-        .astro-override:hover { opacity: 1; background: #fff8c077;}
         .inputs-group {
             display: flex;
             flex-direction: column;
@@ -221,7 +125,7 @@
             text-align: right;
             font-weight: 500;
         }
-        input[type="text"], input[type="number"], input[type="date"] {
+        input[type="text"], input[type="number"], input[type="date"], input[type="time"], select {
             padding: 9px 10px;
             border: 1.4px solid #e3e8f0;
             border-radius: 11px;
@@ -233,14 +137,8 @@
             margin-bottom: 0;
             transition: border .23s, background .4s;
         }
-        body.night input[type="text"], 
-        body.night input[type="number"],
-        body.night input[type="date"] {
-            background: #30385e;
-            color: #f7f7fa;
-            border: 1.5px solid #445177;
-        }
-        input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus {
+        input[type="text"]:focus, input[type="number"]:focus, 
+        input[type="date"]:focus, input[type="time"]:focus, select:focus {
             border: 1.7px solid #fdb469;
             outline: none;
         }
@@ -286,11 +184,6 @@
         }
         .main-btn:active { transform: scale(0.97);}
         .main-btn:hover { background: linear-gradient(90deg,#feb47b 0%, #faad3c 100%);}
-        body.night .main-btn {
-            background: linear-gradient(90deg, #3b528e 0%, #334266 100%);
-            color: #ffe7c4;
-            box-shadow: 0 2px 12px #33426622;
-        }
         .info {
             background: linear-gradient(95deg, #fffde4 60%, #ffe29f 100%);
             border-radius: 18px;
@@ -302,41 +195,100 @@
             align-items: center;
             animation: fadein .7s .2s backwards;
         }
-        body.night .info {
-            background: linear-gradient(95deg, #2d3d5a 60%, #283a54 100%);
+        .label-value { 
+            margin: 5px 0; 
+            font-size: 1.13em; 
+            letter-spacing:.01em;
+            width: 100%;
+            text-align: left;
+            padding-left: 10px;
         }
-        .label-value { margin: 5px 0; font-size: 1.13em; letter-spacing:.01em;}
-        .now-block {
-            background: #fffefaee;
-            border-radius: 16px;
-            padding: 15px 7px 11px 7px;
-            box-shadow: 0 2px 8px #e3e8f031;
-            margin-bottom: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: fadein .7s .2s backwards;
+        .magic-hour-block {
+            background: linear-gradient(95deg, #fff8e1 60%, #ffecb3 100%);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 8px 0;
         }
-        body.night .now-block {
-            background: #2d3555ee;
+        .magic-hour-block .icon-label {
+            font-size: 1.3em;
+            margin-right: 10px;
+            vertical-align: top;
+            margin-top: 4px;
+        }
+        #magic-hour-details {
+            margin-top: 4px;
+            margin-left: 28px;
+            font-size: 0.95em;
+            color: #666;
+        }
+        #magic-hour-planet {
+            font-weight: 600;
+            color: #d84315;
+        }
+        .label-value .hours {
+            font-weight: 600;
+            color: #333;
+        }
+        .label-value .minutes {
+            color: #666;
+            font-size: 0.95em;
         }
         .icon-label {
             margin-right: 6px;
             font-size: 1.13em;
             vertical-align: middle;
             opacity:.86;
+            display: inline-block;
+            width: 24px;
+            text-align: center;
+        }
+        .search-section {
+            background: linear-gradient(95deg, #fffde4 60%, #ffe29f 100%);
+            border-radius: 18px;
+            padding: 21px 15px;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px #e3e8f061;
+            animation: fadein .7s .4s backwards;
+        }
+        .search-section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.2em;
+        }
+        .periods-list {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 12px;
+            text-align: left;
+        }
+        .periods-list h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #2e7d32;
+        }
+        .periods-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .periods-list li {
+            margin-bottom: 5px;
+            font-size: 1em;
         }
         @media (max-width: 600px) {
-            #clouds, #stars { height: 110px; }
-            .container { max-width: 99vw; padding: 16px 3vw 8vw 3vw;}
-            .header { font-size: 1.16em; }
-            .main-btn { width: 98vw; min-width: 0; }
-            .coords-fields input[type="number"], input[type="text"], input[type="date"] { width: 92px; }
-            .astro-override { font-size: 1em; padding: 0 9px 2px 9px;}
+            #clouds { height: 110px; }
+            .container { max-width: 95vw; padding: 16px 4vw 8vw 4vw; margin-top: 20px;}
+            .header { font-size: 1.8em; }
+            .main-btn { width: 100%; }
+            .coords-fields input[type="number"], 
+            input[type="text"], input[type="date"], 
+            input[type="time"], select { width: 140px; }
+            .inputs-row label { min-width: 60px; font-size: 0.95em; }
         }
     </style>
 </head>
-<body class="day">
+<body>
     <div id="clouds">
         <svg class="cloud cloud1"><ellipse cx="54" cy="24" rx="54" ry="24"/></svg>
         <svg class="cloud cloud2"><ellipse cx="85" cy="31" rx="85" ry="31"/></svg>
@@ -345,18 +297,18 @@
         <svg class="cloud cloud5"><ellipse cx="40" cy="10" rx="40" ry="10"/></svg>
         <svg class="cloud cloud6"><ellipse cx="29" cy="8" rx="29" ry="8"/></svg>
     </div>
-    <div id="stars"></div>
+    
     <div class="container">
         <div class="header-row">
             <div class="header" id="header-text">
                 SolarTimer 
-                <span class="icon-astro sun" id="astro-icon-wrap" style="position:relative;" title="Сменить тему (ручной режим)">
-                    <span class="astro-glow sun" id="astro-glow"></span>
+                <span class="icon-astro sun" id="astro-icon-wrap" style="position:relative;">
                     <span id="astro-icon" style="position:relative;z-index:2;">☀️</span>
                 </span>
+                <span style="font-size: 0.7em; margin-left: 5px; color: #666;">Магические часы</span>
             </div>
-            <span id="astro-override-btn" class="astro-override" style="display:none;" title="Вернуть автоматический режим">↺</span>
         </div>
+        
         <form class="inputs-group" onsubmit="return false;">
             <div class="input-block">
                 <div class="inputs-row">
@@ -365,6 +317,7 @@
                 </div>
                 <button class="show-coords-btn" onclick="toggleCoords()" type="button">Показать/скрыть координаты</button>
             </div>
+            
             <div class="input-block hidden" id="coords-row">
                 <div class="coords-fields">
                     <input type="number" id="lat" step="0.0001" placeholder="Широта">
@@ -372,112 +325,186 @@
                 </div>
                 <button type="button" class="main-btn" onclick="autoDetectLocationAndCity()">Геопозиция</button>
             </div>
+            
             <div class="inputs-row">
                 <label for="date">Дата:</label>
                 <input type="date" id="date">
             </div>
-            <button type="button" class="main-btn" onclick="updateTimes()">Рассчитать</button>
+            
+            <div class="inputs-row">
+                <label for="time">Время:</label>
+                <input type="time" id="time" value="">
+                <small style="font-size: 0.85em; color: #666; margin-left: 5px;">(текущее)</small>
+            </div>
+            
+            <button type="button" class="main-btn" onclick="updateTimes()">Рассчитать магические часы</button>
         </form>
+        
         <div class="info">
             <div class="label-value"><span class="icon-label">🌅</span><span id="sunrise">Восход: --:--</span></div>
             <div class="label-value"><span class="icon-label">🌇</span><span id="sunset">Закат: --:--</span></div>
-            <div class="label-value"><span class="icon-label">📏</span><span id="day-length">Длина дня: -- мин</span></div>
-            <div class="label-value"><span class="icon-label">🌙</span><span id="night-length">Длина ночи: -- мин</span></div>
+            
+            <div class="label-value magic-hour-block">
+                <span class="icon-label">🪐</span>
+                <div style="display: flex; flex-direction: column;">
+                    <span id="current-magic-hour">Текущий магический час: --</span>
+                    <div id="magic-hour-details">
+                        <span id="magic-hour-time">Время: --:--</span> - 
+                        <span id="magic-hour-planet">Управляет: --</span>
+                    </div>
+                </div>
+            </div>
+            
             <div class="label-value"><span class="icon-label">☀️</span><span id="day-hour">Световой час: -- мин</span></div>
-            <div class="label-value"><span class="icon-label">🌑</span><span id="night-hour">Ночной час: -- мин</span></div>
+            <div class="label-value"><span class="icon-label">🌙</span><span id="night-hour">Ночной час: -- мин</span></div>
+            
+            <div class="label-value">
+                <span class="icon-label">📏</span>
+                <span id="day-length">
+                    Длина дня: <span class="hours">-- ч -- мин</span> 
+                    (<span class="minutes">-- мин</span>)
+                </span>
+            </div>
+            
+            <div class="label-value">
+                <span class="icon-label">🌑</span>
+                <span id="night-length">
+                    Длина ночи: <span class="hours">-- ч -- мин</span> 
+                    (<span class="minutes">-- мин</span>)
+                </span>
+            </div>
         </div>
-        <div class="now-block">
-            <div class="label-value"><span class="icon-label">⏰</span>Текущее время: <span id="current-time">--:--</span></div>
-            <div class="label-value"><span class="icon-label">🕒</span><span id="solar-time">Световое время: --</span></div>
+        
+        <div class="search-section">
+            <h3><span style="margin-right: 8px;">🔍</span>Поиск периодов для планеты</h3>
+            
+            <div class="search-inputs">
+                <div class="inputs-row" style="margin-bottom: 12px;">
+                    <label for="search-date">Дата:</label>
+                    <input type="date" id="search-date" value="">
+                </div>
+                
+                <div class="inputs-row" style="margin-bottom: 12px;">
+                    <label for="search-planet">Планета:</label>
+                    <select id="search-planet" style="padding: 9px 10px; width: 185px;">
+                        <option value="Солнце">☉ Солнце</option>
+                        <option value="Луна">☽ Луна</option>
+                        <option value="Марс">♂ Марс</option>
+                        <option value="Меркурий">☿ Меркурий</option>
+                        <option value="Юпитер">♃ Юпитер</option>
+                        <option value="Венера">♀ Венера</option>
+                        <option value="Сатурн">♄ Сатурн</option>
+                    </select>
+                </div>
+                
+                <div class="inputs-row" style="margin-bottom: 15px;">
+                    <label for="search-hour-type">Часы:</label>
+                    <select id="search-hour-type" style="padding: 9px 10px; width: 185px;">
+                        <option value="day">Дневные часы</option>
+                        <option value="night">Ночные часы</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button type="button" class="main-btn" onclick="findPlanetPeriods()">
+                Найти периоды планеты
+            </button>
+            
+            <div id="periods-result" style="margin-top: 20px; display: none;"></div>
         </div>
     </div>
-<script>
-document.getElementById('date').valueAsDate = new Date();
 
+<script>
+// Инициализация даты
+const today = new Date();
+document.getElementById('date').valueAsDate = today;
+document.getElementById('search-date').valueAsDate = today;
+
+// Матрица дневных планет (12 строк × 7 столбцов), 0=воскресенье, 6=суббота
+const dayPlanets = [
+    ['Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн'], // час 1
+    ['Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер'], // час 2
+    ['Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс'], // час 3
+    ['Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце'], // час 4
+    ['Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера'], // час 5
+    ['Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий'], // час 6
+    ['Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна'], // час 7
+    ['Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн'], // час 8
+    ['Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер'], // час 9
+    ['Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс'], // час 10
+    ['Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце'], // час 11
+    ['Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера']  // час 12
+];
+
+// Матрица ночных планет (12 строк × 7 столбцов)
+const nightPlanets = [
+    ['Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий'], // час 1
+    ['Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна'], // час 2
+    ['Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн'], // час 3
+    ['Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер'], // час 4
+    ['Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс'], // час 5
+    ['Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце'], // час 6
+    ['Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера'], // час 7
+    ['Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий'], // час 8
+    ['Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна'], // час 9
+    ['Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер', 'Венера', 'Сатурн'], // час 10
+    ['Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс', 'Меркурий', 'Юпитер'], // час 11
+    ['Меркурий', 'Юпитер', 'Венера', 'Сатурн', 'Солнце', 'Луна', 'Марс']  // час 12
+];
+
+// Символы планет
+const planetSymbols = {
+    'Солнце': '☉',
+    'Луна': '☽',
+    'Марс': '♂',
+    'Меркурий': '☿',
+    'Юпитер': '♃',
+    'Венера': '♀',
+    'Сатурн': '♄'
+};
+
+// Названия дней недели
+const weekDays = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+const weekDaysShort = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+
+// Вспомогательные функции
+function pad(n) { return n.toString().padStart(2, '0'); }
+
+function minutesToTime(minutes) {
+    const totalMinutes = minutes % 1440;
+    const hours = Math.floor(totalMinutes / 60);
+    const mins = totalMinutes % 60;
+    return `${pad(hours)}:${pad(mins)}`;
+}
+
+function formatDuration(minutes) {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return {
+        hoursFormat: `${hours} ч ${pad(mins)} мин`,
+        minutesFormat: `${minutes} мин`
+    };
+}
+
+function getPlanetForHour(hourNumber, hourType, dayOfWeek) {
+    const hourIndex = hourNumber - 1; // переводим 1-12 в 0-11
+    if (hourType === 'day') {
+        return dayPlanets[hourIndex][dayOfWeek];
+    } else {
+        return nightPlanets[hourIndex][dayOfWeek];
+    }
+}
+
+function getPlanetSymbol(planetName) {
+    return planetSymbols[planetName] || '🪐';
+}
+
+// Переключение координат
 function toggleCoords() {
     document.getElementById('coords-row').classList.toggle('hidden');
 }
 
-// --- Генерация звезд на фоне ---
-function genStars() {
-    const stars = document.getElementById('stars');
-    stars.innerHTML = "";
-    const starCount = Math.max(64, Math.floor(window.innerWidth / 8));
-    for (let i = 0; i < starCount; i++) {
-        const star = document.createElement("div");
-        star.className = "star";
-        const size = Math.random() * 2.2 + 1.2;
-        star.style.width = star.style.height = size + "px";
-        star.style.left = (Math.random() * 100) + "vw";
-        star.style.top = (Math.random() * 98) + "vh";
-        star.style.animationDuration = (2 + Math.random() * 3.5) + "s";
-        star.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
-        stars.appendChild(star);
-    }
-}
-window.addEventListener('resize', ()=>{ if(nightMode) genStars(); });
-
-// --- Переменные темы ---
-let nightMode = false;
-let manualTheme = null; // null = авто, 'night'/'day' = ручной
-const astroIcon = document.getElementById('astro-icon');
-const astroGlow = document.getElementById('astro-glow');
-const iconWrap = document.getElementById('astro-icon-wrap');
-const overrideBtn = document.getElementById('astro-override-btn');
-const headerText = document.getElementById('header-text');
-
-function setTheme(isNight, triggerFromManual=false) {
-    nightMode = isNight;
-    document.body.classList.toggle('night', isNight);
-    document.body.classList.toggle('day', !isNight);
-
-    // Акцент для SolarTimer
-    headerText.style.color = isNight ? "var(--night-accent)" : "var(--day-accent)";
-
-    // Классы для иконки
-    iconWrap.className = "icon-astro " + (isNight ? "night":"sun") + (manualTheme ? " manual" : "");
-    astroIcon.textContent = isNight ? "🌙" : "☀️";
-    astroGlow.className = "astro-glow " + (isNight ? "moon":"sun");
-
-    // Облака/звёзды
-    if(isNight) { genStars(); }
-    document.getElementById('clouds').style.display = isNight ? 'none' : 'block';
-    document.getElementById('stars').style.display = isNight ? 'block' : 'none';
-
-    // Кнопка сброса
-    overrideBtn.style.display = manualTheme ? 'flex' : 'none';
-}
-
-function themeAutoSwitcher(forceUpdate=false) {
-    if(manualTheme && !forceUpdate) return;
-    if(window.sunData) {
-        const now = new Date();
-        let currentMins = now.getHours() * 60 + now.getMinutes();
-        let isNight = !(currentMins >= window.sunData.sunriseMins && currentMins <= window.sunData.sunsetMins);
-        setTheme(isNight);
-    }
-}
-setInterval(themeAutoSwitcher, 6000);
-
-iconWrap.onclick = function(e){
-    if(manualTheme === null) {
-        // Переключаем на противоположную тему
-        manualTheme = nightMode ? 'day' : 'night';
-        setTheme(manualTheme==='night');
-    } else {
-        // Меняем только если была ручная
-        manualTheme = manualTheme==='night' ? 'day' : 'night';
-        setTheme(manualTheme==='night');
-    }
-    e.preventDefault(); e.stopPropagation();
-};
-overrideBtn.onclick = function(e){
-    manualTheme = null;
-    themeAutoSwitcher(true);
-    e.preventDefault(); e.stopPropagation();
-};
-
-autoDetectLocationAndCity();
+// Автоопределение местоположения
 async function autoDetectLocationAndCity() {
     if (!navigator.geolocation) {
         alert("Ваш браузер не поддерживает геолокацию.");
@@ -488,100 +515,302 @@ async function autoDetectLocationAndCity() {
         const lon = Number(pos.coords.longitude).toFixed(4);
         document.getElementById('lat').value = lat;
         document.getElementById('lon').value = lon;
-        let resp = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ru`);
-        let data = await resp.json();
-        let city = data.address.city || data.address.town || data.address.village || data.address.state || data.display_name || '';
-        document.getElementById('city').value = city;
-        manualTheme = null; // сброс на авто
-        overrideBtn.style.display = 'none';
-        updateTimes();
+        try {
+            let resp = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ru`);
+            let data = await resp.json();
+            let city = data.address.city || data.address.town || data.address.village || data.address.state || data.display_name || '';
+            document.getElementById('city').value = city;
+            updateTimes();
+        } catch (error) {
+            console.error("Ошибка получения города:", error);
+        }
     }, function(){
         alert("Не удалось получить ваше местоположение.");
     });
 }
 
+// Геокодинг города в координаты
 async function cityToCoords() {
     let city = document.getElementById('city').value.trim();
     if (!city) return;
-    let resp = await fetch(`https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(city)}&format=json&limit=1&accept-language=ru`);
-    let data = await resp.json();
-    if (data && data[0]) {
-        document.getElementById('lat').value = Number(data[0].lat).toFixed(4);
-        document.getElementById('lon').value = Number(data[0].lon).toFixed(4);
-        manualTheme = null;
-        overrideBtn.style.display = 'none';
-        updateTimes();
+    try {
+        let resp = await fetch(`https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(city)}&format=json&limit=1&accept-language=ru`);
+        let data = await resp.json();
+        if (data && data[0]) {
+            document.getElementById('lat').value = Number(data[0].lat).toFixed(4);
+            document.getElementById('lon').value = Number(data[0].lon).toFixed(4);
+            updateTimes();
+        }
+    } catch (error) {
+        console.error("Ошибка геокодинга:", error);
     }
 }
+
+// Обратное геокодинг координат в город
 async function coordsToCity() {
     let lat = document.getElementById('lat').value;
     let lon = document.getElementById('lon').value;
     if (!lat || !lon) return;
-    let resp = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ru`);
-    let data = await resp.json();
-    let city = data.address.city || data.address.town || data.address.village || data.address.state || data.display_name || '';
-    document.getElementById('city').value = city;
-    manualTheme = null;
-    overrideBtn.style.display = 'none';
-    updateTimes();
+    try {
+        let resp = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=ru`);
+        let data = await resp.json();
+        let city = data.address.city || data.address.town || data.address.village || data.address.state || data.display_name || '';
+        document.getElementById('city').value = city;
+        updateTimes();
+    } catch (error) {
+        console.error("Ошибка обратного геокодинга:", error);
+    }
 }
-document.getElementById('city').addEventListener('blur', cityToCoords);
-document.getElementById('lat').addEventListener('blur', coordsToCity);
-document.getElementById('lon').addEventListener('blur', coordsToCity);
 
+// Основная функция расчета
 async function updateTimes() {
     let lat = document.getElementById('lat').value;
     let lon = document.getElementById('lon').value;
     let date = document.getElementById('date').value;
-    if (!lat || !lon || !date) return;
-    let sunResp = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&date=${date}&formatted=0`);
-    let sunData = await sunResp.json();
-    if (sunData.status !== "OK") {
-        document.getElementById('sunrise').textContent = "Восход: ошибка API";
-        document.getElementById('sunset').textContent = "Закат: ошибка API";
+    
+    if (!lat || !lon) {
+        // Если координат нет, пытаемся получить по городу
+        await cityToCoords();
+        lat = document.getElementById('lat').value;
+        lon = document.getElementById('lon').value;
+        if (!lat || !lon) {
+            alert("Пожалуйста, введите город или координаты");
+            return;
+        }
+    }
+    
+    try {
+        let sunResp = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&date=${date}&formatted=0`);
+        let sunData = await sunResp.json();
+        
+        if (sunData.status !== "OK") {
+            alert("Ошибка получения данных о восходе/закате");
+            return;
+        }
+        
+        const sunrise = new Date(sunData.results.sunrise);
+        const sunset = new Date(sunData.results.sunset);
+        
+        // Форматируем время восхода/заката
+        document.getElementById('sunrise').textContent = `Восход: ${pad(sunrise.getHours())}:${pad(sunrise.getMinutes())}`;
+        document.getElementById('sunset').textContent = `Закат: ${pad(sunset.getHours())}:${pad(sunset.getMinutes())}`;
+        
+        // Рассчитываем длительности
+        let sunriseMins = sunrise.getHours() * 60 + sunrise.getMinutes();
+        let sunsetMins = sunset.getHours() * 60 + sunset.getMinutes();
+        let dayLength = sunsetMins - sunriseMins;
+        let nightLength = 1440 - dayLength;
+        let dayHour = Math.round(dayLength / 12);
+        let nightHour = Math.round(nightLength / 12);
+        
+        // Обновляем длительность часов
+        document.getElementById('day-hour').textContent = `Световой час: ${dayHour} мин`;
+        document.getElementById('night-hour').textContent = `Ночной час: ${nightHour} мин`;
+        
+        // Форматируем длину дня/ночи в двух форматах
+        const dayFormatted = formatDuration(dayLength);
+        const nightFormatted = formatDuration(nightLength);
+        
+        document.getElementById('day-length').innerHTML = 
+            `Длина дня: <span class="hours">${dayFormatted.hoursFormat}</span> ` +
+            `(<span class="minutes">${dayFormatted.minutesFormat}</span>)`;
+        
+        document.getElementById('night-length').innerHTML = 
+            `Длина ночи: <span class="hours">${nightFormatted.hoursFormat}</span> ` +
+            `(<span class="minutes">${nightFormatted.minutesFormat}</span>)`;
+        
+        // Сохраняем данные
+        window.sunData = { 
+            sunriseMins, sunsetMins, 
+            dayLength, nightLength, 
+            dayHour, nightHour,
+            sunrise, sunset
+        };
+        
+        // Обновляем магическое время
+        updateMagicTime();
+        
+    } catch (error) {
+        console.error("Ошибка при расчете:", error);
+        alert("Произошла ошибка при получении данных. Проверьте подключение к интернету.");
+    }
+}
+
+// Функция обновления магического времени
+function updateMagicTime() {
+    if (!window.sunData) return;
+    
+    const now = new Date();
+    const userTimeInput = document.getElementById('time').value;
+    const selectedDate = new Date(document.getElementById('date').value);
+    
+    // Используем либо введенное время, либо текущее
+    let currentMins, currentDate;
+    if (userTimeInput) {
+        const [hours, minutes] = userTimeInput.split(':').map(Number);
+        currentMins = hours * 60 + minutes;
+        currentDate = selectedDate;
+    } else {
+        currentMins = now.getHours() * 60 + now.getMinutes();
+        currentDate = now;
+    }
+    
+    const { sunriseMins, sunsetMins, dayHour, nightHour } = window.sunData;
+    
+    let magicHour, hourType, hourStartMins;
+    
+    if (currentMins >= sunriseMins && currentMins <= sunsetMins) {
+        // Дневные часы
+        hourType = 'дневной';
+        magicHour = Math.floor((currentMins - sunriseMins) / dayHour);
+        hourStartMins = sunriseMins + magicHour * dayHour;
+    } else {
+        // Ночные часы
+        hourType = 'ночной';
+        if (currentMins > sunsetMins) {
+            magicHour = Math.floor((currentMins - sunsetMins) / nightHour);
+            hourStartMins = sunsetMins + magicHour * nightHour;
+        } else {
+            // После полуночи до восхода
+            magicHour = Math.floor((currentMins + 1440 - sunsetMins) / nightHour);
+            hourStartMins = (sunsetMins + magicHour * nightHour) % 1440;
+        }
+    }
+    
+    const hourNumber = magicHour + 1;
+    const hourTime = minutesToTime(hourStartMins);
+    
+    // Получаем планету для этого часа
+    const dayOfWeek = currentDate.getDay(); // 0=воскресенье, 6=суббота
+    const planet = getPlanetForHour(hourNumber, hourType === 'дневной' ? 'day' : 'night', dayOfWeek);
+    const planetSymbol = getPlanetSymbol(planet);
+    
+    // Отображаем
+    document.getElementById('current-magic-hour').textContent = 
+        `Текущий магический час: ${hourNumber}-й ${hourType}`;
+    
+    document.getElementById('magic-hour-details').innerHTML = 
+        `<span id="magic-hour-time">${hourTime}</span> - ` +
+        `<span id="magic-hour-planet">${planetSymbol} ${planet}</span>`;
+}
+
+// Функция поиска периодов для планеты
+async function findPlanetPeriods() {
+    const searchDateInput = document.getElementById('search-date').value;
+    const planet = document.getElementById('search-planet').value;
+    const hourType = document.getElementById('search-hour-type').value;
+    const lat = document.getElementById('lat').value;
+    const lon = document.getElementById('lon').value;
+    
+    if (!lat || !lon) {
+        alert("Сначала введите город или координаты в основном блоке");
         return;
     }
-    const sunrise = new Date(sunData.results.sunrise);
-    const sunset = new Date(sunData.results.sunset);
-    function pad(n) { return n.toString().padStart(2,'0'); }
-    document.getElementById('sunrise').textContent = `Восход: ${pad(sunrise.getHours())}:${pad(sunrise.getMinutes())}`;
-    document.getElementById('sunset').textContent  = `Закат: ${pad(sunset.getHours())}:${pad(sunset.getMinutes())}`;
-    let sunriseMins = sunrise.getHours() * 60 + sunrise.getMinutes();
-    let sunsetMins = sunset.getHours() * 60 + sunset.getMinutes();
-    let dayLength = sunsetMins - sunriseMins;
-    let nightLength = 1440 - dayLength;
-    let dayHour = Math.round(dayLength / 12);
-    let nightHour = Math.round(nightLength / 12);
-    document.getElementById('day-length').textContent = `Длина дня: ${dayLength} мин`;
-    document.getElementById('night-length').textContent = `Длина ночи: ${nightLength} мин`;
-    document.getElementById('day-hour').textContent = `Световой час: ${dayHour} мин`;
-    document.getElementById('night-hour').textContent = `Ночной час: ${nightHour} мин`;
-    window.sunData = { sunriseMins, sunsetMins, dayLength, nightLength, dayHour, nightHour };
-    themeAutoSwitcher(true);
-    updateCurrentTime();
-}
-function updateCurrentTime() {
-    const now = new Date();
-    document.getElementById('current-time').textContent = now.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
-    if (!window.sunData) return;
-    let currentMins = now.getHours() * 60 + now.getMinutes();
-    let solarTime = '--';
-    if (currentMins >= window.sunData.sunriseMins && currentMins <= window.sunData.sunsetMins) {
-        let minsSinceSunrise = currentMins - window.sunData.sunriseMins;
-        let currentHour = Math.floor(minsSinceSunrise / window.sunData.dayHour) + 1;
-        let minutesInHour = minsSinceSunrise % window.sunData.dayHour;
-        solarTime = `${currentHour}:${minutesInHour.toString().padStart(2, '0')}`;
-    } else {
-        let minsSinceSunset = (currentMins > window.sunData.sunsetMins)
-            ? (currentMins - window.sunData.sunsetMins)
-            : (currentMins + 1440 - window.sunData.sunsetMins);
-        let currentHour = Math.floor(minsSinceSunset / window.sunData.nightHour) + 1;
-        let minutesInHour = minsSinceSunset % window.sunData.nightHour;
-        solarTime = `${currentHour}:${minutesInHour.toString().padStart(2, '0')}`;
+    
+    if (!searchDateInput) {
+        alert("Выберите дату для поиска");
+        return;
     }
-    document.getElementById('solar-time').textContent = `Световое время: ${solarTime}`;
+    
+    try {
+        const searchDate = new Date(searchDateInput);
+        const dayOfWeek = searchDate.getDay();
+        const dayOfWeekName = weekDays[dayOfWeek];
+        const dayOfWeekShort = weekDaysShort[dayOfWeek];
+        
+        // Получаем данные о восходе/закате для этой даты
+        let sunResp = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&date=${searchDateInput}&formatted=0`);
+        let sunData = await sunResp.json();
+        
+        if (sunData.status !== "OK") {
+            alert("Ошибка получения данных для выбранной даты");
+            return;
+        }
+        
+        const sunrise = new Date(sunData.results.sunrise);
+        const sunset = new Date(sunData.results.sunset);
+        
+        const sunriseMins = sunrise.getHours() * 60 + sunrise.getMinutes();
+        const sunsetMins = sunset.getHours() * 60 + sunset.getMinutes();
+        const dayLength = sunsetMins - sunriseMins;
+        const nightLength = 1440 - dayLength;
+        const dayHour = Math.round(dayLength / 12);
+        const nightHour = Math.round(nightLength / 12);
+        
+        // Ищем периоды
+        const periods = [];
+        const matrix = hourType === 'day' ? dayPlanets : nightPlanets;
+        const hourDuration = hourType === 'day' ? dayHour : nightHour;
+        const startMinsBase = hourType === 'day' ? sunriseMins : sunsetMins;
+        
+        for (let hour = 0; hour < 12; hour++) {
+            const currentPlanet = matrix[hour][dayOfWeek];
+            
+            if (currentPlanet === planet) {
+                const hourNumber = hour + 1;
+                const startMins = startMinsBase + hour * hourDuration;
+                const endMins = startMins + hourDuration;
+                
+                periods.push({
+                    hour: hourNumber,
+                    start: minutesToTime(startMins),
+                    end: minutesToTime(endMins % 1440)
+                });
+            }
+        }
+        
+        // Отображаем результаты
+        const resultDiv = document.getElementById('periods-result');
+        
+        if (periods.length === 0) {
+            resultDiv.innerHTML = `
+                <div class="periods-list">
+                    <h4>❌ ${planetSymbols[planet]} ${planet} не управляет ${hourType === 'day' ? 'дневными' : 'ночными'} часами</h4>
+                    <p>В ${dayOfWeekName} ${searchDate.getDate()} ${searchDate.toLocaleDateString('ru-RU', {month: 'long'})} 
+                    ${planet} не является управителем ${hourType === 'day' ? 'дневных' : 'ночных'} магических часов.</p>
+                </div>
+            `;
+        } else {
+            let periodsHTML = periods.map(p => 
+                `<li>• ${p.hour}-й ${hourType === 'day' ? 'дневной' : 'ночной'} час: ${p.start} - ${p.end}</li>`
+            ).join('');
+            
+            resultDiv.innerHTML = `
+                <div class="periods-list">
+                    <h4>✅ В ${dayOfWeekShort} ${searchDate.getDate()} ${searchDate.toLocaleDateString('ru-RU', {month: 'long'})} 
+                    ${planetSymbols[planet]} ${planet} управляет ${hourType === 'day' ? 'дневными' : 'ночными'} часами:</h4>
+                    <ul>${periodsHTML}</ul>
+                    <p><small>Продолжительность магического часа: ${hourDuration} минут</small></p>
+                </div>
+            `;
+        }
+        
+        resultDiv.style.display = 'block';
+        
+    } catch (error) {
+        console.error("Ошибка при поиске периодов:", error);
+        alert("Произошла ошибка при поиске периодов");
+    }
 }
-setInterval(updateCurrentTime, 1000);
+
+// Обработчики событий
+document.getElementById('city').addEventListener('blur', cityToCoords);
+document.getElementById('lat').addEventListener('blur', coordsToCity);
+document.getElementById('lon').addEventListener('blur', coordsToCity);
+
+// Автоматический расчет при загрузке
+window.addEventListener('DOMContentLoaded', function() {
+    // Устанавливаем текущее время в поле времени
+    const now = new Date();
+    document.getElementById('time').value = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    
+    // Пытаемся определить местоположение автоматически
+    setTimeout(() => {
+        if (!document.getElementById('lat').value || !document.getElementById('lon').value) {
+            autoDetectLocationAndCity();
+        }
+    }, 500);
+});
 </script>
 </body>
 </html>
